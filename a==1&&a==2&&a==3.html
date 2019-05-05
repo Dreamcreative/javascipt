@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>a==1 && a==2 && a==3</title>
+</head>
+<body>
+    <script>
+        // 1
+        /**
+         * 如果原始类型的值和对象比较，对象会转为原始类型的值，
+         * 再进行比较，所以会调用valueOf() ,如果返回的还是对象，
+         * 再接着调用toString()
+         * **/
+        // var a = {
+        //     i:1,
+        //     toString(){
+        //         return a.i++
+        //     }
+        // }
+
+        // 2
+        /**
+         * 如果原始类型的值和对象比较，对象会转为原始类型的值，
+         * 再进行比较，所以会调用valueOf() ,如果返回的还是对象，
+         * 再接着调用toString()
+         * **/
+        // var a= {
+        //     i:1,
+        //     valueOf(){
+        //         return a.i++
+        //     }
+        // }
+        
+        // 3
+        /**
+         * 修改 a的get方法
+         * **/
+        // var value = 0;
+        // Object.defineProperty(window,"a",{
+        //     get:()=>{
+        //         return  this.value +=1;
+        //     }
+        // })
+
+        // 4
+        /**
+         * array 也属于对象，对于数组对象 ，toString方法返回一个字符串
+         * 该字符串由数组中的每个元素的toString()返回值经调用 join()方
+         * 法连接组成
+         * **/
+        // var a = [1,2,3];
+        // a.join = a.shift();
+
+        // 5
+        // var aﾠ = 1; 
+        // var a = 2;
+        // var ﾠa = 3;
+        // if(aﾠ==1 && a== 2 &&ﾠa==3) { // if中的空格是一个unicode空格字符不被ECMA解释为空格字符
+        //     console.log("Why hello there!")
+        // }
+        // 解释为
+        // var a_ = 1;
+        // var a = 2;
+        // var _a = 3;
+        // if(a_==1 && a== 2 &&_a==3) {
+        //     console.log("Why hello there!")
+        // }
+
+        // 6
+        /**
+         * Symbol.toPrimitive 表示该对象被转为原始类型的值时，会调用 toPrimitive方法
+         * **/
+        var a = {[Symbol.toPrimitive]:((i)=>()=>++i)(0)}
+        a = {[Symbol.toPrimitive]:((i)=>()=>i++)(2)}
+        if(a==1 && a==2 && a==3){
+            console.log( "hello ")
+        }
+
+    </script>
+</body>
+</html>
