@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>深度&广度优先遍历</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div class="c1">
+        <div class="c2">
+            <div class="c3"></div>
+            <div class="c3"></div>
+            <div class="c3"></div>
+            <div class="c3"></div>
+        </div>
+        <div class="c2">
+            <div class="c3"></div>
+            <div class="c3"></div>
+            <div class="c3"></div>
+            <div class="c3"></div>
+        </div>
+    </div>
+    <script>
+        var nodes=document.querySelectorAll(".c1")[0]
+        /**
+         * 深度优先遍历
+         * 从一个根节点开始访问，一直访问到最深子节点
+         * 访问完好，再从其他的根节点继续访问其他为访问子节点
+         * **/
+        var deepTraval1 = function( node , nodeList=[]){
+            if(node){
+                nodeList.push(node)
+                var children = nodes.children
+                for(var i=0;i<children.length;i++){
+                    deepTraval(children[i],nodeList)
+                }
+            }
+            return nodeList
+        }
+        var deepTraval2 = function(node){
+            var nodes=[];
+            if(node!==null){
+                nodes.push(node)
+                var children = node.children
+                for(var i =0;i<children.length;i++){
+                    nodes = nodes.concat(deepTraval2(children[i]))
+                }
+            }
+            return nodes
+        }
+        /**
+         * 广度优先遍历
+         * 优先访问 同级节点 
+         * **/
+        var widthTraval = function( node ){
+            var nodes=[]
+            var heap=[]
+            if(node){
+                heap.push(node)
+                while(heap.length){
+                    debugger
+                    var item=heap.shift()
+                    var children = item.children
+                    nodes.push(item)
+                    for(var i=0;i<children.length;i++){
+                        heap.push(children[i])
+                    }
+                }
+            }
+            return nodes
+        }
+        console.log(widthTraval(nodes))
+    </script>
+</body>
+</html>
