@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bind</title>
+</head>
+<body>
+    <script src="../js/bind.js"></script>
+    <script>
+    function foo(name){
+        this.name=name;
+    }
+    var obj={};
+    var bar= foo.mybind(obj)
+    bar("jack")
+    console.log(obj.name)
+
+    var tar = foo.mybind(obj,"bbb");
+    tar()
+    var aaa=new bar("aaa")
+
+    console.log(obj.name)
+    console.log(aaa.name)
+    </script>
+</body>
+</html>
