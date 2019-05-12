@@ -7,22 +7,20 @@
     <title>bind</title>
 </head>
 <body>
-    <script src="../js/bind.js"></script>
+    <!-- <script src="../js/bind.js"></script> -->
     <script>
-    function foo(name){
-        this.name=name;
-    }
-    var obj={};
-    var bar= foo.mybind(obj)
-    bar("jack")
-    console.log(obj.name)
-
-    var tar = foo.mybind(obj,"bbb");
-    tar()
-    var aaa=new bar("aaa")
-
-    console.log(obj.name)
-    console.log(aaa.name)
+        this.yideng=20;
+        function test(data){
+            this.yideng="构造函数";
+            console.log( data )
+        }
+        test.prototype.init=function(){
+            console.log(this.yideng);
+        }
+        var result = test.bind(this,"月薪三维");
+        var fn = new result("我是谁");
+        console.log( fn );
+        fn.init();
     </script>
 </body>
 </html>
