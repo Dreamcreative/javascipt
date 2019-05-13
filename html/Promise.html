@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+</head>
+<body>
+    <script src="../js/promise.js"></script>
+    <script>
+        let p = new Mypromise(resolve => {
+            setTimeout(() => resolve('Hello'), 100);
+            });
+        p.then(res => console.log(res));
+        p = new Mypromise((resolve, reject) => {
+        setTimeout(() => reject(new Error('woops')), 100);
+        });//欢迎加入前端全栈开发交流圈一起学习交流：864305860
+        p.then(() => {}, err => console.log('Async error:', err.stack));
+        p = new Mypromise(() => { throw new Error('woops'); });
+        p.then(() => {}, err => console.log('Sync error:', err.stack));
+    </script>
+</body>
+</html>
