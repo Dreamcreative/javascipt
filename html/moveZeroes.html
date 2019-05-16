@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>移动零</title>
+</head>
+<body>
+    <script>
+        /***
+         * 移动零
+         *  给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+         * **/
+        var  moveZeroes1 = function(nums){
+            var n=nums.length;
+            var slow=-1;
+            var fast=0;
+            var x=0;
+            while(slow<fast && fast<n){
+                //把fast 指针后移 ，一直移动到当前指针不为0,
+                //然后把slow 指针后移 ，再将 fast指针和slow指针的内容互调
+                if(nums[fast]!==x){
+                    slow++;
+                    swap(nums,slow,fast);
+                }
+                fast++
+            }
+        }
+        var swap=function(nums,i , j){ 
+            console.log( i , j)
+            let temp=nums[i];
+            nums[i]=nums[j];
+            nums[j]=temp;
+        }
+        var arr=[0,1,0,3,12];
+        moveZeroes1(arr)
+        console.log(arr );
+        var moveZeroes2=function(nums){
+            var len = nums.length;
+            var x=0;
+            var index=0;
+            //将不是0 的内容 移动到index 的位置，,然后将index指针之后的指针内容全部设置为0
+            for(let i=0 ; i<len;i++){
+                if( nums[i] !==x ){
+                    nums[index++]=nums[i]
+                }
+            }
+            for( let i = index;index<len ; index++){
+                nums[index] =0;
+            }
+        }
+        var arr2=[0,1,0,0,0,3,12];
+        moveZeroes2(arr2)
+        console.log(arr2 );
+        </script>
+</body>
+</html>
