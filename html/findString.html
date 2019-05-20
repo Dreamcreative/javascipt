@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查找长度为m的字符串</title>
+</head>
+<body>
+    <script>
+        /**
+         * 实现一个字符串匹配算法，从长度为 n 的字符串 S 中，
+         * 查找是否存在字符串 T，T 的长度是 m，若存在返回所在位置。
+         * **/
+        function findString(S , T){
+            var n = S.length;
+            var m=T.length;
+            if( n< m)return -1;
+            for(let i =0;i<n;i++){
+                if( S.substr(i,m) ===T)return i 
+            }
+            return -1;
+        }
+        var S = "fasfasfasgfgfdtr";
+        var T = "asgfsss";
+        function findString2(S,T){
+            var matched = S.match(T);
+            return matched? matched.index:-1;
+            console.log(matched)
+        }
+        console.log(findString2(S,T));
+    </script>
+</body>
+</html>
