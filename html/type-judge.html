@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>判断类型 </title>
+</head>
+<body>
+    <script>
+        /**
+         * 通用 API
+         * 该类型判断函数可以判断六种基本函数类型以及Boolean Number String Function Array Date RegExp Object Error,
+         * 其他类型因为遇到类型判断的情况较少所以都会返回object,不在进行详细的判断
+         * 比如ES6新增的Symbol Map Set 等类型
+         * **/
+        var classType={};
+        ["Boolean" , 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Object', 'Error'].forEach(item=>{
+            classType[`[object ${item}]`]=item.toLowerCase();
+        })
+        function type (obj){
+            /**
+             * 解决IE6中null和undefined会被Object.prototype.toString识别成[object Object]
+             * **/
+            if(obj==null){
+                return obj+"";
+            }
+            return typeof obj==="object" || typeof obj==="function"?
+                classType[Object.prototype.toString.call(obj)] : "object" || typeof obj ;
+        }
+        //判断空对象
+        function isEmptyObject( obj ){
+            let isObj = obj instanceof Object ;
+            if(!isObj)return false ;
+            var name ;
+            for( name in obj){
+                return false;
+            }
+            return true ;
+        }
+        console.log( isEmptyObject({}) ); // true
+        console.log( isEmptyObject({a:1}) ); // false
+        console.log( isEmptyObject(1) );
+        console.log(isEmptyObject([]));
+        console.log(isEmptyObject(null));
+        console.log(isEmptyObject(undefined));
+        console.log(isEmptyObject(1));
+        console.log(isEmptyObject(''));
+        console.log(isEmptyObject(true));
+        /**
+         * 判断window 对象
+         * window 对象有一个window属性指向自身，可以利用这个特性来判断 window对象
+         * **/
+        function isWindow(obj){
+            return obj && obj.window===window;
+        }
+        /**
+         * 判断数组
+         * **/
+        function isArray(array){
+            if( Array.isArray) return true;
+            return Object.prototype.toString.call(array)==="[object Array]";
+        }
+        /**
+         * 判断类数组
+         * 1 是数组
+         * 2 length 属性是大于0的数字类型，并且 obj[length-1] 必须存在 (考虑到 arr=[,,3]的情况)
+         * 3 长度为0 ( function 如果没有传参 ，arguments.length 就会等于0  返回false )
+         * **/
+        function isArrayLike(arr){
+            var typeRes = type(obj) ;//判断 arr 类型
+            var length = !!arr && "length" in arr && arr.length; //判断是否为 arguments
+            if(typeRes==="function" && isWindow(arr))return false; //如果arr为 function 或者 window 返回fasle
+            return typeRes === "array" || legnth===0 
+                || (typeof arr.legnth ==="number" && arr.legnth>0 && length-1 in arr)
+        }
+        /**
+         * 判断NaN
+         * 判断一个数是不是NaN不能单纯的试用=== 这样来判断，因为NaN不与任何数相等，包括自身，注意在ES6的isNaN中
+         * 只有值为数字类型试用NaN才会返回true
+         * **/
+
+         /**
+          * 深浅拷贝
+          * 如果是数组，实现浅拷贝，比可以slice，concat返回一个新数组的特性来实现；实现深拷贝，
+          * 可以利用JSON.parse和JSON.stringify来实现，但是有一个问题，不能拷贝函数（此时拷贝后返回的数组为null）。
+          * 上面的方法都属于技巧，下面考虑怎么实现一个对象或者数组的深浅拷贝
+          * **/
+        function deepCopy(obj){
+            if(typeof obj !=="object")return ;
+            var newObj = obj instanceof Array ?[]:{};
+            for(var key in obj){
+                if( obj.hasOwnProperty(key)){
+                    newObj[key]= typeof obj[key]==="object"?deepCopy(obj[key]):obj[key];
+                }
+            }
+            return newObj;
+        }
+    </script>
+</body>
+</html>
