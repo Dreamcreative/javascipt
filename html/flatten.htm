@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组扁平化</title>
+</head>
+<body>
+    <script>
+        /** 
+         * 数组扁平化
+         * **/
+        //递归
+        var arr=[1,2,[3,5]];
+        function flatten(arr){
+            var result=[];
+            for(let item of arr){
+                if( Array.isArray(item)){
+                    result.concat(flatten(item))
+                }else{
+                    result.push(item);
+                }
+            }
+            return result;
+        }
+        // toString() 这种方法会将 数组值 类型改变为 string ,只能在只有一种类型的情况下使用
+        function flatten2(arr){
+            //全是数字类型
+            return arr.toString().split(",").map(item=> +item)
+        }
+        //reduce()
+        function flatten3(arr){
+            return arr.reduce((total,cur,index,self)=>{
+                return total.concat( Array.isArray(cur)?flatten3(cur):cur) ;
+            },[])
+        }
+        // ... ES6结构  只能够扁平 一维数组 ，如果要扁平 多维数组 用递归思路
+        function flatten4(arr){
+            while(arr.some(item=> Array.isArray(item))){
+                arr = [].concat( ... arr);
+            }
+            return arr;
+        }
+    </script>
+</body>
+</html>
